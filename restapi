@@ -53,7 +53,7 @@ def bump_version():
         return 'Invalid bump type', 400
     try:
         # Clone the repository
-        subprocess.run(['git', 'clone', 'request.json.get('url')'])
+        subprocess.run(['git', 'clone', "request.json.get('url')"])
         # Checkout the main branch
         subprocess.run(['git', 'checkout', 'main'])
 
