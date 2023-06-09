@@ -34,6 +34,9 @@ def add_project():
 @app.route('/project/bump', methods=['POST'])
 def bump_version():
     print(request.json)
+    projects = db['projects']
+    print(projects)
+
     # Retrieve the new version from the request
     bumptype = request.json.get('bumptype')
     project_name = request.json.get('name')
