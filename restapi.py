@@ -14,7 +14,7 @@ projects = db['projects']
 
 @app.route('/projects', methods=['GET'])
 def get_projects():
-    return json.dumps(list(packages.find({}, {'_id': False})))
+    return json.dumps(list(projects.find({}, {'_id': False})))
 
 @app.route('/projects', methods=['POST'])
 def add_project():
@@ -22,11 +22,11 @@ def add_project():
     project_name = request.json.get('name')
 
     # Check if the project exists
-    if packages.find_one({'name': project_name}):
+    if projects.find_one({'name': project_name}):
         return 'Project already exists', 409
 
     # Add the project to the database
-    packages.insert_one({'name': project_name, 'version': '0.0.0'})
+    projects.insert_one({'name': project_name, 'version': '0.0.0'})
     return 'Project added successfully'
 
 
