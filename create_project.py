@@ -15,6 +15,6 @@ if __name__ == '__main__':
 
 
     data = {
-        'project_name': 'test',
+        'name': 'test',
     }
     post_data(url, data)
