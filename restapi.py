@@ -33,11 +33,12 @@ def add_project():
 
 @app.route('/project/bump', methods=['POST'])
 def bump_version():
+    print(request.json)
     # Retrieve the new version from the request
     bumptype = request.json.get('bumptype')
     project_name = request.json.get('name')
     if not project_name in projects.find_one({'name': project_name}):
-        return 'Project does not exist', 404
+        return 'Project does not exist:' + project_name , 404
     old_version = projects.find_one({'name': project_name})['version']
     old_version = old_version.split('.')
 
