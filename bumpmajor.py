@@ -11,9 +11,7 @@ def post_data(url, data):
 
 
 if __name__ == '__main__':
-    url = os.getenv('RELEASEMANAGER_URL') + '/project/majorbump'
-
-
+    url = os.getenv('RELEASEMANAGER_URL') + '/project/bump'
     data = {
         'name': 'test',
         'bumptype': 'major'
