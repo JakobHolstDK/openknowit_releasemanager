@@ -46,8 +46,6 @@ def clone_and_print_pyproject(git_url):
         # Cleanup: Remove the temporary directory
         shutil.rmtree(temp_dir)
 
-# Example usage
-clone_and_print_pyproject(git_repo_url)
 
 @app.route('/projects', methods=['GET'])
 def get_projects():
