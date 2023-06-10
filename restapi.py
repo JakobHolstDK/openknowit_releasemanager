@@ -3,14 +3,52 @@ from pymongo import MongoClient
 import json
 import os
 import requests
+import GitPython
+
 
 import subprocess
+import tempfile
+
+temp_dir = tempfile.TemporaryDirectory()
+print(temp_dir.name)
+# use temp_dir, and when done:
+temp_dir.cleanup()
 
 app = Flask(__name__)
 client = MongoClient(os.getenv("MONGO"))
 db = client['releasemanager']
 projects = db['projects']
  
+import os
+import shutil
+import tempfile
+from git import Repo
+
+def clone_and_print_pyproject(git_url):
+    # Create a temporary directory
+    temp_dir = tempfile.mkdtemp()
+
+    try:
+        # Clone the Git repository
+        repo = Repo.clone_from(git_url, temp_dir)
+
+        # Find the pyproject.toml file
+        pyproject_path = os.path.join(temp_dir, 'pyproject.toml')
+
+        if os.path.exists(pyproject_path):
+            # Read and print the contents of pyproject.toml
+            with open(pyproject_path, 'r') as file:
+                print(file.read())
+        else:
+            print("pyproject.toml file not found in the repository.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+    finally:
+        # Cleanup: Remove the temporary directory
+        shutil.rmtree(temp_dir)
+
+# Example usage
+clone_and_print_pyproject(git_repo_url)
 
 @app.route('/projects', methods=['GET'])
 def get_projects():
@@ -20,13 +58,18 @@ def get_projects():
 def add_project():
     # Retrieve the project name from the request
     project_name = request.json.get('name')
+    gitrepo = request.json.get('gitrepo')
+
 
     # Check if the project exists
     if projects.find_one({'name': project_name}):
         return 'Project already exists', 409
 
     # Add the project to the database
-    projects.insert_one({'name': project_name, 'version': '0.0.0'})
+    clone_and_print_pyproject(gitrepo)
+
+    projects.insert_one({'name': project_name, 'version': '0.0.0', 'gitrepo': gitrepo})
+
     return 'Project added successfully'
 
 # return my ssh public key
