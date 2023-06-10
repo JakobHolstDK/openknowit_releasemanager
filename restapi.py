@@ -31,7 +31,7 @@ def add_project():
 
 
 
-@app.route('/project/bump', methods=['POST'])
+@app.route('/projects/bump', methods=['POST'])
 def bump_version():
     print(request.json)
     projects = db['projects']
