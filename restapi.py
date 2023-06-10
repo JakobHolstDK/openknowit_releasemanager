@@ -60,17 +60,12 @@ def bump_version():
         return 'Invalid bump type', 400
     try:
         # Clone the repository
+        subprocess.run(['git',  'config',  '--global', 'user.email', "kalm@knowit.dk"])
+        subprocess.run(['git',  'config',  '--global', 'user.user', "kalm automation"])
         subprocess.run(['git', 'clone', "request.json.get('url')"])
-        # Checkout the main branch
         subprocess.run(['git', 'checkout', 'main'])
-
-        # Bump the version in pyproject.toml
         subprocess.run(['sed', '-i', 's/version = ".*/version = "{}"/'.format(new_version), 'pyproject.toml'])
-
-        # Commit the changes
         subprocess.run(['git', 'commit', '-am', 'Bumped version to {}'.format(new_version)])
-
-        # Push to the main branch
         subprocess.run(['git', 'push', 'origin', 'main'])
 
         return 'Version bumped successfully'
