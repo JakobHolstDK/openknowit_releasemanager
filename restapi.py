@@ -40,10 +40,13 @@ def bump_version():
     # Retrieve the new version from the request
     bumptype = request.json.get('bumptype')
     project_name = request.json.get('name')
-    if not project_name in projects.find_one({'name': project_name}):
+    project =  projects.find_one({'name': project_name})
+    if project is None:
         return 'Project does not exist:' + project_name , 404
     old_version = projects.find_one({'name': project_name})['version']
     old_version = old_version.split('.')
+    print(old_version)
+    
 
         
         
