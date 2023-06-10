@@ -3,7 +3,6 @@ from pymongo import MongoClient
 import json
 import os
 import requests
-import GitPython
 
 
 import subprocess
