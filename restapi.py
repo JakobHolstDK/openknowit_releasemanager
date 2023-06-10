@@ -29,6 +29,14 @@ def add_project():
     projects.insert_one({'name': project_name, 'version': '0.0.0'})
     return 'Project added successfully'
 
+# return my ssh public key
+@app.route('/projects/key', methods=['GET'])
+def get_key():
+    if os.getenv("KEY") is None:
+        return 'No key found', 404
+    else:
+        key = open(os.getenv("KEY"), 'r').read()
+        return key
 
 
 @app.route('/projects/bump', methods=['POST'])
