@@ -15,7 +15,7 @@ if __name__ == '__main__':
 
 
     data = {
-        'name': 'test',
-        'gitrepo': 'git@github.com:miracle-as/openknowit_kalm.git'
+        'name': 'kalm',
+        'git_repo_url': 'git@github.com:miracle-as/openknowit_kalm.git'
     }
     post_data(url, data)

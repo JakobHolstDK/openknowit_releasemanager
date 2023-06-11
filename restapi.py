@@ -55,7 +55,7 @@ def get_projects():
 def add_project():
     # Retrieve the project name from the request
     project_name = request.json.get('name')
-    gitrepo = request.json.get('gitrepo')
+    gitrepo = request.json.get('git_repo_url')
 
 
     # Check if the project exists
