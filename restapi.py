@@ -17,6 +17,7 @@ app = Flask(__name__)
 client = MongoClient(os.getenv("MONGO"))
 db = client['releasemanager']
 projects = db['projects']
+
  
 import os
 import shutil
@@ -45,6 +46,12 @@ def clone_and_print_pyproject(git_url):
     finally:
         # Cleanup: Remove the temporary directory
         shutil.rmtree(temp_dir)
+# function to flush the database
+@app.route('/projects/flush', methods=['POST'])
+def flush_projects():
+    projects = db['projects']
+    projects.delete_many({})
+    return 'Database flushed successfully'
 
 
 @app.route('/projects', methods=['GET'])
